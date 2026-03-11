@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SteganoSafe Admin Security Settings - System security configuration and policies">
+    <title>Admin Security — SteganoSafe</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                </div>
+                <div class="sidebar-brand">
+                    <h2>SteganoSafe</h2>
+                    <p>Secure File System</p>
+                </div>
+            </div>
+            <div class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/admin/dashboard" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/vault" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span>File Vault</span>
+                </a>
+                <a href="/decrypt" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+                    </svg>
+                    <span>Decrypt Tool</span>
+                </a>
+                <a href="/admin/security" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    <span>Security</span>
+                </a>
+                <a href="/admin/users" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                    </svg>
+                    <span>User Management</span>
+                </a>
+                <a href="/admin/logs" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span>Audit Logs</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="access-badge admin">
+                    <span style="font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">ACCESS
+                        STATUS</span>
+                </div>
+                <div class="access-badge admin">
+                    <span class="dot"></span>
+                    <span class="access-text">ADMIN Access</span>
+                </div>
+                <a href="#" id="logout-btn" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                    </svg>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <div class="header-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        Secure File Sharing System
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="session-timer">
+                        <span class="timer-dot"></span>
+                        Session: <span id="session-time">30:00</span>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-details">
+                            <div class="name user-name-display">admin</div>
+                            <div class="role user-role-display">ADMIN</div>
+                        </div>
+                        <div class="user-avatar"><span class="user-avatar-letter">A</span></div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        Admin Security Settings
+                    </h1>
+                    <p>System security configuration, admin profile, and security architecture overview</p>
+                </div>
+
+                <div class="content-grid">
+                    <!-- Profile & Password -->
+                    <div>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                    Admin Profile
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="admin-profile-form" class="settings-form">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" class="form-input no-icon" id="admin-username" readonly
+                                            style="opacity: 0.6; cursor: not-allowed;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-input no-icon" id="admin-email"
+                                            placeholder="admin@steganosafe.local">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            width="18" height="18">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>
+                                        Update Profile
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                    Change Admin Password
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="admin-password-form" class="settings-form">
+                                    <div class="form-group">
+                                        <label for="admin-current-pw">Current Password</label>
+                                        <div class="form-input-wrapper">
+                                            <span class="input-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                                </svg>
+                                            </span>
+                                            <input type="password" id="admin-current-pw" class="form-input"
+                                                placeholder="Enter current password" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="admin-new-pw">New Password</label>
+                                        <div class="form-input-wrapper">
+                                            <span class="input-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path
+                                                        d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5" />
+                                                </svg>
+                                            </span>
+                                            <input type="password" id="admin-new-pw" class="form-input"
+                                                placeholder="Min 8 characters" required>
+                                            <button type="button" class="password-toggle"
+                                                onclick="togglePassword('admin-new-pw', this)">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                    <circle cx="12" cy="12" r="3" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Architecture -->
+                    <div>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    </svg>
+                                    Security Architecture
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="security-item">
+                                    <span class="security-label">AES-256-GCM</span>
+                                    <div class="security-bar">
+                                        <div class="security-bar-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span class="security-value green">Confidentiality + Integrity</span>
+                                </div>
+                                <div class="security-item">
+                                    <span class="security-label">PBKDF2-SHA256</span>
+                                    <div class="security-bar">
+                                        <div class="security-bar-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span class="security-value green">100K Iterations</span>
+                                </div>
+                                <div class="security-item">
+                                    <span class="security-label">LSB Steganography</span>
+                                    <div class="security-bar">
+                                        <div class="security-bar-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span class="security-value purple">Invisibility Layer</span>
+                                </div>
+                                <div class="security-item">
+                                    <span class="security-label">SHA-256 Hashing</span>
+                                    <div class="security-bar">
+                                        <div class="security-bar-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span class="security-value green">Tamper Detection</span>
+                                </div>
+                                <div class="security-item">
+                                    <span class="security-label">CRC32 Verification</span>
+                                    <div class="security-bar">
+                                        <div class="security-bar-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span class="security-value green">Integrity Check</span>
+                                </div>
+                                <div class="security-item">
+                                    <span class="security-label">Secure Headers</span>
+                                    <div class="security-bar">
+                                        <div class="security-bar-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span class="security-value green">6 Headers Active</span>
+                                </div>
+                                <div class="security-item">
+                                    <span class="security-label">Rate Limiting</span>
+                                    <div class="security-bar">
+                                        <div class="security-bar-fill" style="width: 100%"></div>
+                                    </div>
+                                    <span class="security-value green">5 req/min</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                                        <line x1="3" y1="9" x2="21" y2="9" />
+                                        <line x1="9" y1="3" x2="9" y2="21" />
+                                    </svg>
+                                    Secure Headers Active
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="policy-card">
+                                    <ul class="policy-list">
+                                        <li>X-Content-Type-Options: nosniff</li>
+                                        <li>X-Frame-Options: DENY</li>
+                                        <li>X-XSS-Protection: 1; mode=block</li>
+                                        <li>Content-Security-Policy: active</li>
+                                        <li>Referrer-Policy: strict-origin-when-cross-origin</li>
+                                        <li>Permissions-Policy: restricted</li>
+                                        <li>Cache-Control: no-store</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        (async () => {
+            const user = await Auth.check('admin');
+            if (!user) return;
+            document.getElementById('admin-username').value = user.username;
+            document.getElementById('admin-email').value = user.email || '';
+        })();
+
+        document.getElementById('admin-profile-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                await API.post('/api/auth/update-profile', {
+                    email: document.getElementById('admin-email').value.trim()
+                });
+                Toast.show('Admin profile updated', 'success');
+            } catch (error) {
+                Toast.show('Update failed: ' + error.message, 'error');
+            }
+        });
+
+        document.getElementById('admin-password-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const currentPw = document.getElementById('admin-current-pw').value;
+            const newPw = document.getElementById('admin-new-pw').value;
+
+            if (newPw.length < 8) {
+                Toast.show('Password must be at least 8 characters', 'error');
+                return;
+            }
+
+            try {
+                await API.post('/api/auth/change-password', {
+                    current_password: currentPw,
+                    new_password: newPw
+                });
+                Toast.show('Password changed. Session refreshed.', 'success');
+                document.getElementById('admin-password-form').reset();
+            } catch (error) {
+                Toast.show('Failed: ' + error.message, 'error');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+# SteganoSafe — Dependencies
+# Python 3.10+ required
+
+# Cryptography library for AES-256-GCM encryption and PBKDF2 key derivation
+cryptography>=41.0.0

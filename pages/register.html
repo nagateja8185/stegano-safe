@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Register for SteganoSafe - Create your secure file sharing account">
+    <title>Register — SteganoSafe</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo -->
+            <div class="auth-logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                </div>
+                <h1>Create Account</h1>
+                <p>Join SteganoSafe — Secure File Sharing</p>
+            </div>
+
+            <!-- Register Form -->
+            <form id="register-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="form-input-wrapper">
+                        <span class="input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                        </span>
+                        <input type="text" id="username" class="form-input"
+                            placeholder="Choose a username (min 3 chars)" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email (optional)</label>
+                    <div class="form-input-wrapper">
+                        <span class="input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                        </span>
+                        <input type="email" id="email" class="form-input" placeholder="your@email.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="form-input-wrapper">
+                        <span class="input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                        </span>
+                        <input type="password" id="password" class="form-input" placeholder="Min 8 characters" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password', this)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <div class="form-input-wrapper">
+                        <span class="input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                        </span>
+                        <input type="password" id="confirm-password" class="form-input"
+                            placeholder="Repeat your password" required>
+                    </div>
+                </div>
+
+                <div id="error-message" class="hidden"
+                    style="color: var(--error); font-size: 0.8125rem; margin-bottom: 16px; padding: 10px; background: var(--error-bg); border-radius: 8px; border: 1px solid rgba(239,68,68,0.2);">
+                </div>
+
+                <button type="submit" id="register-btn" class="btn btn-primary btn-full">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="8.5" cy="7" r="4" />
+                        <line x1="20" y1="8" x2="20" y2="14" />
+                        <line x1="23" y1="11" x2="17" y2="11" />
+                    </svg>
+                    Create Account
+                </button>
+            </form>
+
+            <div style="margin-top: 24px; text-align: center;">
+                <p style="color: var(--text-secondary); font-size: 0.8125rem;">
+                    Already have an account?
+                    <a href="/login" style="color: var(--accent); font-weight: 600;">Sign in</a>
+                </p>
+            </div>
+
+            <!-- Security Info -->
+            <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" width="14"
+                        height="14">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">Your data is encrypted and secured
+                        locally</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = document.getElementById('register-btn');
+            const errorEl = document.getElementById('error-message');
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Validation
+            if (!username || !password) {
+                errorEl.textContent = 'Username and password are required.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            if (username.length < 3) {
+                errorEl.textContent = 'Username must be at least 3 characters.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            if (password.length < 8) {
+                errorEl.textContent = 'Password must be at least 8 characters.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorEl.textContent = 'Passwords do not match.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading-spinner"></div> Creating account...';
+            errorEl.classList.add('hidden');
+
+            try {
+                const data = await API.post('/api/auth/register', { username, email, password });
+                if (data && data.success) {
+                    Toast.show('Account created! Redirecting to login...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 1500);
+                }
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.classList.remove('hidden');
+                btn.disabled = false;
+                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Create Account';
+            }
+        });
+    </script>
+</body>
+
+</html>
