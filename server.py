@@ -20,7 +20,7 @@ import time
 import uuid
 import mimetypes
 import urllib.parse
-import cgi
+import email
 import io
 import traceback
 from http.server import HTTPServer, BaseHTTPRequestHandler
@@ -93,6 +93,33 @@ SECURE_HEADERS = {
     'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
     'Pragma': 'no-cache',
 }
+
+
+class MultipartForm:
+    """Helper class to store parsed multipart form data."""
+    def __init__(self):
+        self.fields = {}
+
+    def getvalue(self, key, default=''):
+        val = self.fields.get(key)
+        if val is None:
+            return default
+        if isinstance(val, MultipartFileItem):
+            return default
+        return val
+
+    def __getitem__(self, key):
+        return self.fields[key]
+
+    def __contains__(self, key):
+        return key in self.fields
+
+
+class MultipartFileItem:
+    """Helper class to mimic file items returned by cgi.FieldStorage."""
+    def __init__(self, filename, data):
+        self.filename = filename
+        self.file = io.BytesIO(data)
 
 
 class SteganoSafeHandler(BaseHTTPRequestHandler):
@@ -197,23 +224,45 @@ class SteganoSafeHandler(BaseHTTPRequestHandler):
             return None
 
     def parse_multipart(self):
-        """Parse multipart form data for file uploads."""
+        """Parse multipart form data for file uploads using standard email module."""
         content_type = self.headers.get('Content-Type', '')
         if 'multipart/form-data' not in content_type:
             return None, None
 
-        # Use cgi module to parse multipart data
-        environ = {
-            'REQUEST_METHOD': 'POST',
-            'CONTENT_TYPE': content_type,
-            'CONTENT_LENGTH': self.headers.get('Content-Length', '0'),
-        }
-        form = cgi.FieldStorage(
-            fp=self.rfile,
-            headers=self.headers,
-            environ=environ,
-            keep_blank_values=True
-        )
+        content_length = int(self.headers.get('Content-Length', '0'))
+        if content_length > MAX_UPLOAD_SIZE:
+            return None, None
+
+        body = self.rfile.read(content_length)
+
+        # Construct a raw MIME message to parse standard multipart boundary sections
+        msg_bytes = f"Content-Type: {content_type}\r\n\r\n".encode('utf-8') + body
+        msg = email.message_from_bytes(msg_bytes)
+
+        if not msg.is_multipart():
+            return None, None
+
+        form = MultipartForm()
+        for part in msg.walk():
+            if part.get_content_maintype() == 'multipart':
+                continue
+
+            cdisp = part.get('content-disposition', '')
+            if not cdisp:
+                continue
+
+            name = part.get_param('name', header='content-disposition')
+            if not name:
+                continue
+
+            filename = part.get_filename()
+            payload = part.get_payload(decode=True)
+
+            if filename is not None:
+                form.fields[name] = MultipartFileItem(filename, payload)
+            else:
+                form.fields[name] = payload.decode('utf-8', errors='ignore')
+
         return form, None
 
     def get_client_ip(self):

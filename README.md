@@ -120,7 +120,7 @@ A default **admin** account is pre-configured:
 | Field | Value |
 |---|---|
 | **Username** | `admin` |
-| **Password** | `admin123` |
+| **Password** | `Admin@123` |
 
 1. Open `http://127.0.0.1:8000/login`
 2. Log in with the credentials above
